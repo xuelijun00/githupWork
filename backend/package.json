@@ -1,0 +1,29 @@
+{
+  "name": "sample-reconciliation-backend",
+  "version": "1.0.0",
+  "description": "实验室样本交接复核系统后端服务",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "ts-node src/utils/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/uuid": "^9.0.8",
+    "prisma": "^5.14.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}

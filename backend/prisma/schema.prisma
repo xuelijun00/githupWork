@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Batch {
+  id                  String    @id @default(cuid())
+  batchNo             String    @unique
+  sourceUnit          String
+  arrivalTime         DateTime
+  status              String
+  sampleCount         Int
+  currentResponsible  String
+  version             Int       @default(1)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  samples             Sample[]
+  records             Record[]
+
+  @@map("batches")
+}
+
+model Sample {
+  id                   String    @id @default(cuid())
+  collectionNo         String
+  batchId              String
+  preservationCondition String
+  status               String
+  currentResponsible   String
+  abnormalReason       String?
+  version              Int       @default(1)
+
+  batch                Batch     @relation(fields: [batchId], references: [id])
+  records              Record[]
+
+  @@map("samples")
+}
+
+model Record {
+  id                  String    @id @default(cuid())
+  sampleId            String
+  batchId             String
+  operator            String
+  action              String
+  actionTime          DateTime  @default(now())
+  remark              String?
+
+  sample              Sample    @relation(fields: [sampleId], references: [id])
+  batch               Batch     @relation(fields: [batchId], references: [id])
+
+  @@map("records")
+}
